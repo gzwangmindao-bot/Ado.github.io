@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>个人主页</title>
+  <style>
+    /* ===== 基础变量 ===== */
+    :root {
+      --bg:        #0f1117;
+      --bg2:       #1a1d27;
+      --bg3:       #242838;
+      --accent:    #6c63ff;
+      --accent2:   #a78bfa;
+      --text:      #e2e8f0;
+      --text-muted:#94a3b8;
+      --border:    rgba(255,255,255,0.08);
+      --radius:    12px;
+    }
+
+    /* ===== 重置 ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+
+    /* ===== 导航 ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1rem, 5vw, 4rem);
+      height: 64px;
+      background: rgba(15,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-weight: 700; font-size: 1.1rem; letter-spacing: 0.5px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-muted); font-size: 0.9rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ===== 主容器 ===== */
+    main { padding-top: 64px; }
+    section { padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 5vw, 4rem); }
+
+    /* ===== Hero ===== */
+    #hero {
+      min-height: calc(100vh - 64px);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -20%, rgba(108,99,255,.25), transparent),
+        var(--bg);
+    }
+    .hero-inner { max-width: 700px; }
+    .hero-avatar {
+      width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 1.5rem;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 0 6px rgba(108,99,255,.15);
+    }
+    .hero-tag {
+      display: inline-block; margin-bottom: 1rem;
+      padding: .3rem .9rem; border-radius: 999px;
+      background: rgba(108,99,255,.15); border: 1px solid rgba(108,99,255,.3);
+      font-size: .8rem; color: var(--accent2); letter-spacing: 1px;
+    }
+    .hero-name {
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      font-weight: 800; line-height: 1.15;
+      margin-bottom: .75rem;
+    }
+    .hero-name span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;
+      max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .7rem 1.6rem; border-radius: var(--radius);
+      font-size: .95rem; font-weight: 600; cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); text-decoration: none; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; box-shadow: 0 4px 20px rgba(108,99,255,.35);
+    }
+    .btn-primary:hover { box-shadow: 0 6px 28px rgba(108,99,255,.5); }
+    .btn-outline {
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-muted);
+    }
+    .btn-outline:hover { border-color: var(--accent2); color: var(--text); }
+
+    /* ===== 通用标题 ===== */
+    .section-label {
+      display: inline-block; margin-bottom: .6rem;
+      font-size: .75rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent2);
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .section-line {
+      width: 48px; height: 3px; border-radius: 2px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      margin-bottom: 3rem;
+    }
+
+    /* ===== 关于我 ===== */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      max-width: 960px;
+    }
+    .about-text p { color: var(--text-muted); margin-bottom: 1rem; }
+    .about-info { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+    .info-item { display: flex; gap: .75rem; align-items: flex-start; }
+    .info-icon { font-size: 1.1rem; margin-top: .1rem; }
+    .info-label { font-size: .75rem; color: var(--text-muted); }
+    .info-value { font-weight: 600; }
+
+    .stats-grid { display: grid; gap: 1rem; }
+    .stat-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem 1.5rem;
+    }
+    .stat-num {
+      font-size: 2rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-desc { font-size: .85rem; color: var(--text-muted); }
+
+    /* ===== 技能 ===== */
+    #skills { background: var(--bg); }
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem; max-width: 960px;
+    }
+    .skill-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      transition: transform .2s, border-color .2s;
+    }
+    .skill-card:hover { transform: translateY(-4px); border-color: rgba(108,99,255,.4); }
+    .skill-icon { font-size: 1.8rem; margin-bottom: .75rem; }
+    .skill-name { font-weight: 600; margin-bottom: .4rem; }
+    .skill-desc { font-size: .85rem; color: var(--text-muted); }
+    .skill-bar-wrap {
+      margin-top: .8rem; height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden;
+    }
+    .skill-bar {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 1s ease;
+    }
+
+    /* ===== 联系 ===== */
+    #contact { background: var(--bg2); }
+    .contact-inner { max-width: 640px; text-align: center; }
+    .contact-cards {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2rem;
+    }
+    .contact-card {
+      display: flex; align-items: center; gap: .75rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.5rem;
+      transition: border-color .2s, transform .2s;
+      color: var(--text);
+    }
+    .contact-card:hover {
+      border-color: var(--accent2); transform: translateY(-2px); text-decoration: none;
+    }
+    .contact-icon { font-size: 1.4rem; }
+    .contact-label { font-size: .75rem; color: var(--text-muted); }
+    .contact-value { font-weight: 600; font-size: .9rem; }
+
+    /* ===== 页脚 ===== */
+    footer {
+      text-align: center; padding: 2rem;
+      font-size: .8rem; color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ===== 滚动动画 ===== */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 700px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== 导航 ===== -->
+<nav>
+  <div class="nav-logo">YourName</div>
+  <ul class="nav-links">
+    <li><a href="#about">关于我</a></li>
+    <li><a href="#skills">技能</a></li>
+    <li><a href="#contact">联系</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- ===== Hero ===== -->
+  <section id="hero">
+    <div class="hero-inner fade-in">
+      <!--
+        头像说明：
+        - 要用本地图片：将图片（如 avatar.jpg）放到与 index.html 同一文件夹，
+          然后把下面 src 改为 ./avatar.jpg
+        - 暂时先用自动生成的占位头像
+      -->
+      <img
+        class="hero-avatar"
+        src="https://api.dicebear.com/7.x/initials/svg?seed=YN&backgroundColor=6c63ff&fontFamily=Segoe+UI&fontSize=40&textColor=ffffff"
+        alt="头像"
+        onerror="this.style.background='#6c63ff';this.src=''"
+      />
+      <div class="hero-tag">欢迎来到我的主页</div>
+      <!-- ↓↓↓ 把"王珉道"改成你的真实名字 ↓↓↓ -->
+      <h1 class="hero-name">你好，我是<br /><span>王珉道</span></h1>
+      <!-- ↓↓↓ 改成你的一句话简介 ↓↓↓ -->
+      <p class="hero-desc">
+        热爱技术与生活的地球化学家，喜欢用代码解决真实问题。
+      </p>
+      <div class="hero-btns">
+        <a class="btn btn-primary" href="#contact">联系我</a>
+        <a class="btn btn-outline" href="#about">了解更多</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 关于我 ===== -->
+  <section id="about">
+    <div class="about-grid fade-in">
+      <div class="about-text">
+        <div class="section-label">About Me</div>
+        <h2 class="section-title">关于我</h2>
+        <div class="section-line"></div>
+        <!-- ↓↓↓ 修改这里的自我介绍文字 ↓↓↓ -->
+        <p>
+          在这里写你的自我介绍第一段。可以描述你的背景、经历或者你最喜欢做的事情。
+        </p>
+        <p>
+          第二段可以介绍你的学习经历、工作经历，或者你对未来的规划和目标。
+        </p>
+
+        <div class="about-info">
+          <div class="info-item">
+            <span class="info-icon">📍</span>
+            <div>
+              <div class="info-label">所在城市</div>
+              <!-- ↓ 改为你的城市 ↓ -->
+              <div class="info-value">北京，中国</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">💼</span>
+            <div>
+              <div class="info-label">当前职位</div>
+              <!-- ↓ 改为你的职位和公司 ↓ -->
+              <div class="info-value">你的职位 · 所在公司</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">🎓</span>
+            <div>
+              <div class="info-label">学历</div>
+              <!-- ↓ 改为你的学校和专业 ↓ -->
+              <div class="info-value">某某大学 · 某某专业</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">🌐</span>
+            <div>
+              <div class="info-label">语言</div>
+              <div class="info-value">中文（母语）· English</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ↓↓↓ 修改这里的数字和描述 ↓↓↓ -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">3+</div>
+          <div class="stat-desc">年工作经验</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">20+</div>
+          <div class="stat-desc">完成项目</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-desc">对学习的热情</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 技能 ===== -->
+  <section id="skills">
+    <div class="section-label fade-in">Skills</div>
+    <h2 class="section-title fade-in">我的技能</h2>
+    <div class="section-line fade-in"></div>
+    <div class="skills-grid">
+
+      <!-- ↓↓↓ 每个 skill-card 是一个技能卡片，可以复制/删除/修改 ↓↓↓ -->
+      <div class="skill-card fade-in">
+        <div class="skill-icon">💻</div>
+        <div class="skill-name">技能一（如：Python）</div>
+        <div class="skill-desc">5 年使用经验，参与多个大型数据分析项目。</div>
+        <!-- data-width 是熟练度，如 90% 表示九成熟练 -->
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div>
+      </div>
+
+      <div class="skill-card fade-in">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">技能二（如：设计）</div>
+        <div class="skill-desc">熟练使用常见工具，能够独立完成视觉设计任务。</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="80%"></div></div>
+      </div>
+
+      <div class="skill-card fade-in">
+        <div class="skill-icon">📊</div>
+        <div class="skill-name">技能三（如：数据分析）</div>
+        <div class="skill-desc">有一定基础和实践经验，正在持续深入学习中。</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="65%"></div></div>
+      </div>
+
+      <div class="skill-card fade-in">
+        <div class="skill-icon">🤝</div>
+        <div class="skill-name">团队协作</div>
+        <div class="skill-desc">善于沟通，有良好的团队合作精神，能高效配合跨部门工作。</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="95%"></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 联系 ===== -->
+  <section id="contact">
+    <div class="contact-inner fade-in">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">联系我</h2>
+      <div class="section-line" style="margin: 0 auto 2rem;"></div>
+      <p style="color: var(--text-muted);">
+        欢迎通过以下方式与我取得联系，无论是合作机会还是简单的打招呼，我都很乐意回复。
+      </p>
+      <div class="contact-cards">
+        <!-- ↓ 把 your@email.com 改成你的邮箱 ↓ -->
+        <a class="contact-card" href="mailto:your@email.com">
+          <span class="contact-icon">✉️</span>
+          <div>
+            <div class="contact-label">邮箱</div>
+            <div class="contact-value">your@email.com</div>
+          </div>
+        </a>
+        <!-- ↓ 把 yourhandle 改成你的 GitHub 用户名，没有可以删掉这个卡片 ↓ -->
+        <a class="contact-card" href="https://github.com/yourhandle" target="_blank" rel="noopener">
+          <span class="contact-icon">🐙</span>
+          <div>
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">@yourhandle</div>
+          </div>
+        </a>
+        <!-- ↓ 改成你的微信号，或者删掉这张卡片 ↓ -->
+        <a class="contact-card" href="#">
+          <span class="contact-icon">💬</span>
+          <div>
+            <div class="contact-label">微信</div>
+            <div class="contact-value">your_wechat_id</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <!-- ↓ 把"王珉道"改成你的真实名字 ↓ -->
+  <p>© 2026 王珉道 · 用 ❤️ 和 HTML 构建</p>
+</footer>
+
+<script>
+  // 滚动淡入动画
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // 技能进度条动画（滚动到可见时触发）
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const bar = e.target;
+        bar.style.width = bar.dataset.width;
+        barObserver.unobserve(bar);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.skill-bar').forEach(bar => {
+    bar.style.width = '0%';
+    barObserver.observe(bar);
+  });
+</script>
+
+</body>
+</html>

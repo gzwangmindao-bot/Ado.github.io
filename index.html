@@ -1,24 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>个人主页</title>
+  <title>Mindao (ADO) Wang</title>
   <style>
-    /* ===== 基础变量 ===== */
     :root {
-      --bg:        #0f1117;
-      --bg2:       #1a1d27;
-      --bg3:       #242838;
-      --accent:    #6c63ff;
-      --accent2:   #a78bfa;
-      --text:      #e2e8f0;
-      --text-muted:#94a3b8;
-      --border:    rgba(255,255,255,0.08);
+      --bg:        #06101e;
+      --bg2:       #0a1a2e;
+      --bg3:       #0f2442;
+      --accent:    #1557a0;
+      --accent2:   #4fa3e3;
+      --gold:      #c4a35a;
+      --text:      #dde8f5;
+      --text-muted:#7aadcf;
+      --border:    rgba(79,163,227,0.12);
       --radius:    12px;
     }
 
-    /* ===== 重置 ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
@@ -29,7 +28,10 @@
     }
     a { color: var(--accent2); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    img { max-width: 100%; display: block; }
+
+    /* ===== 语言切换 ===== */
+    body.zh .en { display: none !important; }
+    body:not(.zh) .zh { display: none !important; }
 
     /* ===== 导航 ===== */
     nav {
@@ -37,22 +39,56 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 clamp(1rem, 5vw, 4rem);
       height: 64px;
-      background: rgba(15,17,23,0.85);
+      background: rgba(6,16,30,0.9);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-weight: 700; font-size: 1.1rem; letter-spacing: 0.5px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      font-weight: 700; font-size: 1.05rem;
+      background: linear-gradient(135deg, var(--accent2), var(--gold));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 0.3px;
     }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { color: var(--text-muted); font-size: 0.9rem; transition: color .2s; }
+    .nav-right { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a { color: var(--text-muted); font-size: .85rem; transition: color .2s; }
     .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .lang-btn {
+      padding: .3rem .8rem; border-radius: 6px; cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent; color: var(--accent2);
+      font-size: .8rem; font-weight: 600; letter-spacing: 1px;
+      transition: all .2s;
+    }
+    .lang-btn:hover { background: var(--bg3); border-color: var(--accent2); }
 
-    /* ===== 主容器 ===== */
+    /* ===== 通用 ===== */
     main { padding-top: 64px; }
-    section { padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 5vw, 4rem); }
+    section { padding: clamp(4rem, 8vw, 6rem) clamp(1rem, 5vw, 4rem); }
+    .container { max-width: 960px; }
+    .section-label {
+      display: inline-block; margin-bottom: .5rem;
+      font-size: .72rem; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .section-title {
+      font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 700; margin-bottom: .8rem;
+    }
+    .section-line {
+      width: 44px; height: 3px; border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      margin-bottom: 2.5rem;
+    }
+    .tag {
+      display: inline-block; padding: .2rem .7rem; border-radius: 999px;
+      font-size: .75rem; font-weight: 600;
+      background: rgba(79,163,227,.12); border: 1px solid rgba(79,163,227,.25);
+      color: var(--accent2);
+    }
+    .tag-gold {
+      background: rgba(196,163,90,.12); border-color: rgba(196,163,90,.3);
+      color: var(--gold);
+    }
 
     /* ===== Hero ===== */
     #hero {
@@ -60,167 +96,204 @@
       display: flex; align-items: center; justify-content: center;
       text-align: center;
       background:
-        radial-gradient(ellipse 80% 60% at 50% -20%, rgba(108,99,255,.25), transparent),
+        radial-gradient(ellipse 90% 60% at 50% -10%, rgba(21,87,160,.3), transparent),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(79,163,227,.08), transparent),
         var(--bg);
     }
-    .hero-inner { max-width: 700px; }
+    .hero-inner { max-width: 720px; padding: 0 1rem; }
     .hero-avatar {
-      width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 1.5rem;
-      object-fit: cover;
-      border: 3px solid var(--accent);
-      box-shadow: 0 0 0 6px rgba(108,99,255,.15);
+      width: 108px; height: 108px; border-radius: 50%;
+      margin: 0 auto 1.5rem; object-fit: cover;
+      border: 3px solid var(--accent2);
+      box-shadow: 0 0 0 6px rgba(79,163,227,.15), 0 0 40px rgba(21,87,160,.3);
     }
-    .hero-tag {
-      display: inline-block; margin-bottom: 1rem;
-      padding: .3rem .9rem; border-radius: 999px;
-      background: rgba(108,99,255,.15); border: 1px solid rgba(108,99,255,.3);
-      font-size: .8rem; color: var(--accent2); letter-spacing: 1px;
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      margin-bottom: 1.2rem; padding: .35rem 1rem; border-radius: 999px;
+      background: rgba(21,87,160,.2); border: 1px solid rgba(79,163,227,.3);
+      font-size: .78rem; color: var(--accent2); letter-spacing: .5px;
     }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
     .hero-name {
-      font-size: clamp(2.2rem, 6vw, 3.5rem);
-      font-weight: 800; line-height: 1.15;
-      margin-bottom: .75rem;
+      font-size: clamp(2rem, 5.5vw, 3.2rem);
+      font-weight: 800; line-height: 1.15; margin-bottom: .7rem;
     }
-    .hero-name span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+    .hero-name .highlight {
+      background: linear-gradient(135deg, var(--accent2), var(--gold));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .hero-desc {
-      font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;
-      max-width: 520px; margin-left: auto; margin-right: auto;
+    .hero-title {
+      font-size: 1rem; color: var(--text-muted); margin-bottom: .4rem;
+    }
+    .hero-sub {
+      font-size: .9rem; color: var(--gold); margin-bottom: 1.8rem; font-style: italic;
     }
     .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
     .btn {
       display: inline-flex; align-items: center; gap: .5rem;
-      padding: .7rem 1.6rem; border-radius: var(--radius);
-      font-size: .95rem; font-weight: 600; cursor: pointer;
+      padding: .65rem 1.5rem; border-radius: var(--radius);
+      font-size: .9rem; font-weight: 600; cursor: pointer;
       transition: transform .2s, box-shadow .2s;
     }
     .btn:hover { transform: translateY(-2px); text-decoration: none; }
     .btn-primary {
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; box-shadow: 0 4px 20px rgba(108,99,255,.35);
+      color: #fff; box-shadow: 0 4px 20px rgba(21,87,160,.4);
     }
-    .btn-primary:hover { box-shadow: 0 6px 28px rgba(108,99,255,.5); }
+    .btn-primary:hover { box-shadow: 0 6px 28px rgba(79,163,227,.4); }
     .btn-outline {
-      border: 1px solid var(--border); background: transparent;
-      color: var(--text-muted);
+      border: 1px solid var(--border); background: transparent; color: var(--text-muted);
     }
     .btn-outline:hover { border-color: var(--accent2); color: var(--text); }
 
-    /* ===== 通用标题 ===== */
-    .section-label {
-      display: inline-block; margin-bottom: .6rem;
-      font-size: .75rem; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--accent2);
-    }
-    .section-title {
-      font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700;
-      margin-bottom: 1rem;
-    }
-    .section-line {
-      width: 48px; height: 3px; border-radius: 2px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      margin-bottom: 3rem;
-    }
-
-    /* ===== 关于我 ===== */
+    /* ===== About ===== */
     #about { background: var(--bg2); }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
-      max-width: 960px;
+    .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3.5rem; }
+    .about-text p { color: var(--text-muted); margin-bottom: 1rem; font-size: .95rem; }
+    .about-info { display: flex; flex-direction: column; gap: .9rem; margin-top: 1.5rem; }
+    .info-item { display: flex; gap: .75rem; align-items: flex-start; font-size: .9rem; }
+    .info-icon { font-size: 1rem; margin-top: .2rem; flex-shrink: 0; }
+    .info-label { font-size: .7rem; color: var(--text-muted); }
+    .info-value { font-weight: 600; font-size: .88rem; }
+    .edu-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      border-left: 3px solid var(--accent2);
     }
-    .about-text p { color: var(--text-muted); margin-bottom: 1rem; }
-    .about-info { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
-    .info-item { display: flex; gap: .75rem; align-items: flex-start; }
-    .info-icon { font-size: 1.1rem; margin-top: .1rem; }
-    .info-label { font-size: .75rem; color: var(--text-muted); }
-    .info-value { font-weight: 600; }
+    .edu-school { font-weight: 700; font-size: 1rem; margin-bottom: .2rem; }
+    .edu-degree { color: var(--accent2); font-size: .9rem; margin-bottom: .3rem; }
+    .edu-date { font-size: .78rem; color: var(--text-muted); margin-bottom: .8rem; }
+    .edu-detail { font-size: .82rem; color: var(--text-muted); line-height: 1.6; }
+    .course-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
+    .course-tag {
+      font-size: .68rem; padding: .15rem .55rem; border-radius: 4px;
+      background: rgba(21,87,160,.2); color: var(--accent2); border: 1px solid rgba(79,163,227,.2);
+    }
 
-    .stats-grid { display: grid; gap: 1rem; }
-    .stat-card {
+    /* ===== Research ===== */
+    #research { background: var(--bg); }
+    .research-list { display: flex; flex-direction: column; gap: 1.5rem; max-width: 960px; }
+    .research-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem 1.75rem;
+      transition: border-color .25s, transform .25s;
+      position: relative;
+    }
+    .research-card:hover { border-color: rgba(79,163,227,.35); transform: translateX(4px); }
+    .research-card::before {
+      content: ''; position: absolute; left: 0; top: 1.5rem; bottom: 1.5rem;
+      width: 3px; border-radius: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+    }
+    .rc-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: .5rem; margin-bottom: .5rem; }
+    .rc-title { font-weight: 700; font-size: .98rem; flex: 1; }
+    .rc-date { font-size: .75rem; color: var(--gold); white-space: nowrap; }
+    .rc-role { font-size: .8rem; color: var(--accent2); margin-bottom: .7rem; font-style: italic; }
+    .rc-points { list-style: none; display: flex; flex-direction: column; gap: .35rem; }
+    .rc-points li { font-size: .85rem; color: var(--text-muted); padding-left: 1.1rem; position: relative; }
+    .rc-points li::before { content: '▸'; position: absolute; left: 0; color: var(--accent2); font-size: .7rem; top: .25rem; }
+
+    /* ===== Publications ===== */
+    #publications { background: var(--bg2); }
+    .pub-list { display: flex; flex-direction: column; gap: 1.25rem; max-width: 960px; }
+    .pub-card {
       background: var(--bg3); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 1.25rem 1.5rem;
+      transition: border-color .2s;
     }
-    .stat-num {
-      font-size: 2rem; font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .stat-desc { font-size: .85rem; color: var(--text-muted); }
+    .pub-card:hover { border-color: rgba(79,163,227,.3); }
+    .pub-title { font-weight: 600; font-size: .93rem; margin-bottom: .4rem; line-height: 1.5; }
+    .pub-authors { font-size: .8rem; color: var(--text-muted); margin-bottom: .4rem; }
+    .pub-authors strong { color: var(--accent2); }
+    .pub-journal { font-size: .78rem; color: var(--text-muted); font-style: italic; }
+    .pub-status { margin-left: .5rem; }
 
-    /* ===== 技能 ===== */
+    /* ===== Skills ===== */
     #skills { background: var(--bg); }
-    .skills-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.25rem; max-width: 960px;
-    }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; max-width: 960px; }
     .skill-card {
       background: var(--bg2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.5rem;
-      transition: transform .2s, border-color .2s;
+      border-radius: var(--radius); padding: 1.25rem 1.5rem;
+      transition: border-color .2s, transform .2s;
     }
-    .skill-card:hover { transform: translateY(-4px); border-color: rgba(108,99,255,.4); }
-    .skill-icon { font-size: 1.8rem; margin-bottom: .75rem; }
-    .skill-name { font-weight: 600; margin-bottom: .4rem; }
-    .skill-desc { font-size: .85rem; color: var(--text-muted); }
-    .skill-bar-wrap {
-      margin-top: .8rem; height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden;
+    .skill-card:hover { border-color: rgba(79,163,227,.35); transform: translateY(-3px); }
+    .skill-cat { font-size: .7rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .skill-tag {
+      font-size: .78rem; padding: .25rem .65rem; border-radius: 6px;
+      background: rgba(21,87,160,.18); border: 1px solid rgba(79,163,227,.2);
+      color: var(--accent2);
     }
-    .skill-bar {
-      height: 100%; border-radius: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      transition: width 1s ease;
-    }
+    .lang-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; }
+    .lang-name { font-size: .85rem; font-weight: 600; min-width: 90px; }
+    .lang-level { font-size: .75rem; color: var(--text-muted); }
+    .lang-bar-wrap { flex: 1; height: 3px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+    .lang-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 1.2s ease; }
 
-    /* ===== 联系 ===== */
-    #contact { background: var(--bg2); }
-    .contact-inner { max-width: 640px; text-align: center; }
-    .contact-cards {
-      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2rem;
+    /* ===== Awards ===== */
+    #awards { background: var(--bg2); }
+    .award-list { display: flex; flex-direction: column; gap: 1rem; max-width: 760px; }
+    .award-card {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.1rem 1.4rem;
+      transition: border-color .2s;
     }
+    .award-card:hover { border-color: rgba(196,163,90,.35); }
+    .award-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: .1rem; }
+    .award-title { font-weight: 600; font-size: .9rem; margin-bottom: .2rem; }
+    .award-detail { font-size: .8rem; color: var(--text-muted); }
+    .award-year { font-size: .75rem; color: var(--gold); font-weight: 600; margin-top: .2rem; }
+
+    /* ===== Contact ===== */
+    #contact { background: var(--bg); }
+    .contact-inner { max-width: 640px; text-align: center; }
+    .contact-cards { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2rem; }
     .contact-card {
       display: flex; align-items: center; gap: .75rem;
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1rem 1.5rem;
-      transition: border-color .2s, transform .2s;
-      color: var(--text);
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: .9rem 1.4rem;
+      color: var(--text); transition: border-color .2s, transform .2s;
     }
-    .contact-card:hover {
-      border-color: var(--accent2); transform: translateY(-2px); text-decoration: none;
-    }
-    .contact-icon { font-size: 1.4rem; }
-    .contact-label { font-size: .75rem; color: var(--text-muted); }
-    .contact-value { font-weight: 600; font-size: .9rem; }
+    .contact-card:hover { border-color: var(--accent2); transform: translateY(-2px); text-decoration: none; }
+    .contact-icon { font-size: 1.3rem; }
+    .contact-label { font-size: .7rem; color: var(--text-muted); }
+    .contact-value { font-size: .85rem; font-weight: 600; }
 
-    /* ===== 页脚 ===== */
+    /* ===== Footer ===== */
     footer {
       text-align: center; padding: 2rem;
-      font-size: .8rem; color: var(--text-muted);
+      font-size: .78rem; color: var(--text-muted);
       border-top: 1px solid var(--border);
     }
 
-    /* ===== 滚动动画 ===== */
-    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    /* ===== Animations ===== */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
     .fade-in.visible { opacity: 1; transform: none; }
 
-    /* ===== 响应式 ===== */
-    @media (max-width: 700px) {
+    /* ===== Responsive ===== */
+    @media (max-width: 720px) {
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
       .nav-links { display: none; }
+      .rc-header { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
-<!-- ===== 导航 ===== -->
 <nav>
-  <div class="nav-logo">YourName</div>
-  <ul class="nav-links">
-    <li><a href="#about">关于我</a></li>
-    <li><a href="#skills">技能</a></li>
-    <li><a href="#contact">联系</a></li>
-  </ul>
+  <div class="nav-logo">Mindao Wang</div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about"><span class="en">About</span><span class="zh">关于</span></a></li>
+      <li><a href="#research"><span class="en">Research</span><span class="zh">科研</span></a></li>
+      <li><a href="#publications"><span class="en">Publications</span><span class="zh">发表</span></a></li>
+      <li><a href="#skills"><span class="en">Skills</span><span class="zh">技能</span></a></li>
+      <li><a href="#contact"><span class="en">Contact</span><span class="zh">联系</span></a></li>
+    </ul>
+    <button class="lang-btn" onclick="toggleLang()" id="lang-btn">中</button>
+  </div>
 </nav>
 
 <main>
@@ -228,172 +301,401 @@
   <!-- ===== Hero ===== -->
   <section id="hero">
     <div class="hero-inner fade-in">
-      <!--
-        头像说明：
-        - 要用本地图片：将图片（如 avatar.jpg）放到与 index.html 同一文件夹，
-          然后把下面 src 改为 ./avatar.jpg
-        - 暂时先用自动生成的占位头像
-      -->
-      <img
-        class="hero-avatar"
-        src="https://api.dicebear.com/7.x/initials/svg?seed=YN&backgroundColor=6c63ff&fontFamily=Segoe+UI&fontSize=40&textColor=ffffff"
-        alt="头像"
-        onerror="this.style.background='#6c63ff';this.src=''"
+      <img class="hero-avatar"
+        src="./avatar.jpg"
+        alt="Avatar"
+        onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=MA&backgroundColor=002147&fontFamily=Segoe+UI&fontSize=38&textColor=4fa3e3'"
       />
-      <div class="hero-tag">欢迎来到我的主页</div>
-      <!-- ↓↓↓ 把"王珉道"改成你的真实名字 ↓↓↓ -->
-      <h1 class="hero-name">你好，我是<br /><span>王珉道</span></h1>
-      <!-- ↓↓↓ 改成你的一句话简介 ↓↓↓ -->
-      <p class="hero-desc">
-        热爱技术与生活的地球化学家，喜欢用代码解决真实问题。
+
+      <h1 class="hero-name">
+        <span class="en">Mindao <span class="highlight">(ADO)</span> Wang</span>
+        <span class="zh">王珉道 <span class="highlight">(ADO)</span></span>
+      </h1>
+      <p class="hero-title">
+        <span class="en">Earth Scientist & Researcher</span>
+        <span class="zh">地球科学研究者</span>
+      </p>
+      <p class="hero-sub">
+        <span class="en">MSc in Earth Science · 2022–2026</span>
+        <span class="zh">地球科学硕士 · 2022–2026</span>
       </p>
       <div class="hero-btns">
-        <a class="btn btn-primary" href="#contact">联系我</a>
-        <a class="btn btn-outline" href="#about">了解更多</a>
+        <a class="btn btn-primary" href="#research">
+          <span class="en">View Research</span><span class="zh">查看科研</span>
+        </a>
+        <a class="btn btn-outline" href="#contact">
+          <span class="en">Contact Me</span><span class="zh">联系我</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- ===== 关于我 ===== -->
+  <!-- ===== About ===== -->
   <section id="about">
-    <div class="about-grid fade-in">
+    <div class="about-grid container fade-in">
       <div class="about-text">
-        <div class="section-label">About Me</div>
-        <h2 class="section-title">关于我</h2>
+        <div class="section-label"><span class="en">About Me</span><span class="zh">关于我</span></div>
+        <h2 class="section-title"><span class="en">About</span><span class="zh">个人简介</span></h2>
         <div class="section-line"></div>
-        <!-- ↓↓↓ 修改这里的自我介绍文字 ↓↓↓ -->
-        <p>
-          在这里写你的自我介绍第一段。可以描述你的背景、经历或者你最喜欢做的事情。
-        </p>
-        <p>
-          第二段可以介绍你的学习经历、工作经历，或者你对未来的规划和目标。
-        </p>
+        <p class="en">MSc student in Earth Science at the University of Oxford (St Anne's College), with research spanning geochemistry, climate modelling, ocean alkalinity, and planetary science. Passionate about understanding Earth's past and future through quantitative and computational methods.</p>
+        <p class="zh">牛津大学圣安妮学院地球科学硕士生，研究方向涵盖地球化学、气候建模、海洋碱度与行星科学。致力于通过定量与计算方法探索地球的过去与未来。</p>
+        <p class="en">With cross-disciplinary experience in data science, climate modelling, and geochemical analysis, I aim to bridge the gap between Earth system science and real-world policy applications.</p>
+        <p class="zh">具备数据科学、气候建模和地球化学分析的跨学科经验，致力于将地球系统科学与现实政策应用相结合。</p>
 
         <div class="about-info">
           <div class="info-item">
             <span class="info-icon">📍</span>
             <div>
-              <div class="info-label">所在城市</div>
-              <!-- ↓ 改为你的城市 ↓ -->
-              <div class="info-value">北京，中国</div>
-            </div>
-          </div>
-          <div class="info-item">
-            <span class="info-icon">💼</span>
-            <div>
-              <div class="info-label">当前职位</div>
-              <!-- ↓ 改为你的职位和公司 ↓ -->
-              <div class="info-value">你的职位 · 所在公司</div>
+              <div class="info-label"><span class="en">Location</span><span class="zh">所在地</span></div>
+              <div class="info-value">Oxford, UK</div>
             </div>
           </div>
           <div class="info-item">
             <span class="info-icon">🎓</span>
             <div>
-              <div class="info-label">学历</div>
-              <!-- ↓ 改为你的学校和专业 ↓ -->
-              <div class="info-value">某某大学 · 某某专业</div>
+              <div class="info-label"><span class="en">Degree</span><span class="zh">学位</span></div>
+              <div class="info-value en">MSc (Hons) Earth Science · Expected Jun 2026</div>
+              <div class="info-value zh">地球科学荣誉硕士 · 预计2026年6月毕业</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">✉️</span>
+            <div>
+              <div class="info-label">Email</div>
+              <div class="info-value">mindao.wang@st-annes.ox.ac.uk</div>
             </div>
           </div>
           <div class="info-item">
             <span class="info-icon">🌐</span>
             <div>
-              <div class="info-label">语言</div>
-              <div class="info-value">中文（母语）· English</div>
+              <div class="info-label"><span class="en">Languages</span><span class="zh">语言</span></div>
+              <div class="info-value en">English (Professional) · Mandarin (Native) · Cantonese (Fluent)</div>
+              <div class="info-value zh">英语（专业）· 普通话（母语）· 粤语（流利）</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ↓↓↓ 修改这里的数字和描述 ↓↓↓ -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-num">3+</div>
-          <div class="stat-desc">年工作经验</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">20+</div>
-          <div class="stat-desc">完成项目</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">∞</div>
-          <div class="stat-desc">对学习的热情</div>
+      <div>
+        <div class="edu-card">
+          <div class="edu-school">🏛️ University of Oxford</div>
+          <div class="edu-degree">
+            <span class="en">MSc (Hons) in Earth Science</span>
+            <span class="zh">地球科学荣誉硕士</span>
+          </div>
+          <div class="edu-date">
+            St Anne's College · Sept 2022 – Jun 2026 (<span class="en">Expected</span><span class="zh">预计</span>)
+          </div>
+          <div class="edu-detail">
+            <span class="en">Year 1&2: 2:1 · Predicted: 1st</span>
+            <span class="zh">第一、二年：2:1 · 预测：一等荣誉</span>
+          </div>
+          <div class="course-tags">
+            <span class="course-tag">Climate Change</span>
+            <span class="course-tag">Physical Oceanography</span>
+            <span class="course-tag">Geochemistry</span>
+            <span class="course-tag">Remote Sensing</span>
+            <span class="course-tag">Seismology</span>
+            <span class="course-tag">Machine Learning</span>
+            <span class="course-tag">Statistics</span>
+            <span class="course-tag">Fourier Analysis</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== 技能 ===== -->
+  <!-- ===== Research ===== -->
+  <section id="research">
+    <div class="container fade-in">
+      <div class="section-label"><span class="en">Research Experience</span><span class="zh">科研经历</span></div>
+      <h2 class="section-title"><span class="en">Research</span><span class="zh">科研经历</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="research-list container">
+
+      <div class="research-card fade-in">
+        <div class="rc-header">
+          <div class="rc-title en">Present-Day Changes in Ocean Alkalinity: Response to and Influence on Atmospheric CO₂</div>
+          <div class="rc-title zh">现代海洋碱度变化：对大气CO₂的响应与影响</div>
+          <div class="rc-date">Jul 2025 – Apr 2026</div>
+        </div>
+        <div class="rc-role en">Researcher · Supervisors: Prof. Gideon Henderson FRS & Prof. Ros Rickaby FRS · Oxford</div>
+        <div class="rc-role zh">研究员 · 导师：Gideon Henderson 教授（英国皇家学会院士）& Ros Rickaby 教授（英国皇家学会院士）· 牛津</div>
+        <ul class="rc-points">
+          <li class="en">Conducting a basin-scale assessment of modern ocean alkalinity trends using BATS, HOT, and GLODAP datasets.</li>
+          <li class="zh">利用BATS、HOT及GLODAP数据集，开展现代海洋碱度趋势的盆地尺度评估。</li>
+          <li class="en">Developed Python-based statistical frameworks to quantify long-term trends, accounting for autocorrelation and spatial heterogeneity.</li>
+          <li class="zh">构建基于Python的统计框架，量化长期趋势，并考虑自相关性与空间异质性。</li>
+          <li class="en">Evaluating detectability of anthropogenic alkalinity signals and distinguishing them from natural variability.</li>
+          <li class="zh">评估人为碱度信号的可探测性，并与自然变率区分。</li>
+        </ul>
+      </div>
+
+      <div class="research-card fade-in">
+        <div class="rc-header">
+          <div class="rc-title en">Investigating Late Devonian Extinction: Climate Modeling & Lithium Isotopes</div>
+          <div class="rc-title zh">晚泥盆世灭绝事件研究：气候模拟与锂同位素</div>
+          <div class="rc-date">Apr 2024 – Present</div>
+        </div>
+        <div class="rc-role en">Research Assistant · University of Oxford · Co-researcher: Xiangying Ye</div>
+        <div class="rc-role zh">科研助理 · 牛津大学 · 合作研究者：叶翔颖</div>
+        <ul class="rc-points">
+          <li class="en">Utilized climate modeling to study organic matter decomposition and its impact on geochemical cycles during the Late Devonian.</li>
+          <li class="zh">利用气候模型研究晚泥盆世有机质分解及其对地球化学循环的影响。</li>
+          <li class="en">Connected carbon and lithium cycles by quantifying lithium fractionation through riverine and hydrothermal inputs/outputs.</li>
+          <li class="zh">通过量化河流和热液端元的锂分馏，建立碳循环与锂循环的联系。</li>
+          <li class="en">Advanced understanding of lithium isotopic systems as proxies for weathering and reverse weathering in ancient Earth systems.</li>
+          <li class="zh">深化了锂同位素体系作为古代地球风化与反向风化代用指标的认识。</li>
+        </ul>
+      </div>
+
+      <div class="research-card fade-in">
+        <div class="rc-header">
+          <div class="rc-title en">Assessing Future Wheat Yields & Climate Uncertainty in Western Europe</div>
+          <div class="rc-title zh">西欧未来小麦产量与气候不确定性评估</div>
+          <div class="rc-date">Jul 2024 – Feb 2025</div>
+        </div>
+        <div class="rc-role en">Research Assistant · Supervisors: Prof. Andy Challinor (Leeds) & Prof. Yongjiu Dai (Sun Yat-sen University)</div>
+        <div class="rc-role zh">科研助理 · 导师：Andy Challinor 教授（利兹大学）& 戴永久教授（中山大学）</div>
+        <ul class="rc-points">
+          <li class="en">Developed wheat yield predictions for Western Europe over 50–100 years using CMIP6/CMIP7 climate data and the EPIC-IIASA crop model.</li>
+          <li class="zh">利用CMIP6/CMIP7气候数据与EPIC-IIASA作物模型，预测西欧未来50–100年小麦产量。</li>
+          <li class="en">Analyzed climate data using Python and R to assess how climate change affects future UK wheat yields.</li>
+          <li class="zh">使用Python和R分析气候数据，评估气候变化对英国未来小麦产量的影响。</li>
+          <li class="en">Conducted uncertainty analyses across multiple climate scenarios and proposed optimal planting strategies.</li>
+          <li class="zh">在多种气候情景下开展不确定性分析，并提出最优种植策略建议。</li>
+        </ul>
+      </div>
+
+      <div class="research-card fade-in">
+        <div class="rc-header">
+          <div class="rc-title en">Oxford Deep Space Exploration Project</div>
+          <div class="rc-title zh">牛津深空探测项目</div>
+          <div class="rc-date">Nov 2024 – Present</div>
+        </div>
+        <div class="rc-role en">Collaborator · Prof. Richard Palin & Prof. Yilin Xiao · Oxford &amp; USTC</div>
+        <div class="rc-role zh">合作研究者 · Richard Palin 教授 & 肖益林教授 · 牛津大学 & 中国科学技术大学</div>
+        <ul class="rc-points">
+          <li class="en">Collaborating on lunar far-side material analysis, focusing on geochemical properties, isotopic fractionation, and crustal differences.</li>
+          <li class="zh">合作开展月球背面物质分析，聚焦地球化学特性、同位素分馏及地壳差异研究。</li>
+          <li class="en">Initiated research on lunar magma ocean crystallization and mare basalt genesis through experimental simulations and remote sensing imagery.</li>
+          <li class="zh">通过实验模拟和遥感图像开展月球岩浆洋结晶及月海玄武岩成因研究。</li>
+          <li class="en">Coordinating with the Chinese Space Agency and deep-space exploration labs on sample-return missions.</li>
+          <li class="zh">与中国航天局及深空探测实验室协作，参与月球采样返回任务的国际合作。</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== Publications ===== -->
+  <section id="publications">
+    <div class="container fade-in">
+      <div class="section-label"><span class="en">Publications</span><span class="zh">学术发表</span></div>
+      <h2 class="section-title"><span class="en">Publications</span><span class="zh">学术发表</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="pub-list container">
+
+      <div class="pub-card fade-in">
+        <div class="pub-title en">Present-Day Changes in Ocean Alkalinity: Response to and Influence on Atmospheric CO₂</div>
+        <div class="pub-title zh">现代海洋碱度变化：对大气CO₂的响应与影响</div>
+        <div class="pub-authors"><strong>Wang, M.D.</strong>; Henderson, G.; Rickaby, R.</div>
+        <div class="pub-journal">
+          <span class="en">In preparation · </span><span class="zh">准备中 · </span>
+          <em>Nature Geoscience</em>
+          <span class="tag tag-gold pub-status"><span class="en">In Preparation</span><span class="zh">准备中</span></span>
+        </div>
+      </div>
+
+      <div class="pub-card fade-in">
+        <div class="pub-title en">Quantifying Uncertainty Cascades from Climate Models to Crop Predictions: Toward Hybrid and Co-Designed Modeling Strategies</div>
+        <div class="pub-title zh">量化气候模型到作物预测的不确定性传递：迈向混合与协同设计建模策略</div>
+        <div class="pub-authors"><strong>Wang, M.D.</strong>; Challinor, A.; Zhou, J.Y.; Hu, X.</div>
+        <div class="pub-journal">
+          <em>Frontiers in Sustainable Food Systems</em>
+          <span class="tag pub-status" style="background:rgba(79,163,227,.15);border-color:rgba(79,163,227,.35);">
+            <span class="en">Under Review</span><span class="zh">审稿中</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="pub-card fade-in">
+        <div class="pub-title en">Lithium Isotope Evidence for Rapid Climate Cooling During the Late Devonian Event</div>
+        <div class="pub-title zh">晚泥盆世事件中气候快速降温的锂同位素证据</div>
+        <div class="pub-authors">Ye, X.Y.; Wang, Y.Y.; <strong>Wang, M.D.</strong>; Yang, T.Y.; Tan, D.B.; Xiao, Y.L.</div>
+        <div class="pub-journal">
+          <span class="en">In preparation · </span><span class="zh">准备中 · </span>
+          <em>Earth and Planetary Science Letters</em>
+          <span class="tag tag-gold pub-status"><span class="en">In Preparation</span><span class="zh">准备中</span></span>
+        </div>
+      </div>
+
+      <div class="pub-card fade-in">
+        <div class="pub-title en">Exploring the Sustainable Development of Web3 Game Token Economy</div>
+        <div class="pub-title zh">探索Web3游戏代币经济的可持续发展</div>
+        <div class="pub-authors">Xie, A.; Hu, X.; <strong>Wang, M.</strong>; Zhao, X.</div>
+        <div class="pub-journal">
+          <em>Sustainability</em> 2024, 16, 6587 ·
+          <a href="https://doi.org/10.3390/su16156587" target="_blank" rel="noopener">doi:10.3390/su16156587</a>
+          <span class="tag pub-status" style="background:rgba(40,167,69,.15);border-color:rgba(40,167,69,.35);color:#5cb85c;">
+            <span class="en">Published</span><span class="zh">已发表</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== Skills ===== -->
   <section id="skills">
-    <div class="section-label fade-in">Skills</div>
-    <h2 class="section-title fade-in">我的技能</h2>
-    <div class="section-line fade-in"></div>
-    <div class="skills-grid">
+    <div class="container fade-in">
+      <div class="section-label"><span class="en">Skills & Tools</span><span class="zh">技能与工具</span></div>
+      <h2 class="section-title"><span class="en">Skills</span><span class="zh">技能</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid container">
 
-      <!-- ↓↓↓ 每个 skill-card 是一个技能卡片，可以复制/删除/修改 ↓↓↓ -->
       <div class="skill-card fade-in">
-        <div class="skill-icon">💻</div>
-        <div class="skill-name">技能一（如：Python）</div>
-        <div class="skill-desc">5 年使用经验，参与多个大型数据分析项目。</div>
-        <!-- data-width 是熟练度，如 90% 表示九成熟练 -->
-        <div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div>
+        <div class="skill-cat"><span class="en">Programming</span><span class="zh">编程语言</span></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">R</span>
+          <span class="skill-tag">MATLAB</span>
+        </div>
       </div>
 
       <div class="skill-card fade-in">
-        <div class="skill-icon">🎨</div>
-        <div class="skill-name">技能二（如：设计）</div>
-        <div class="skill-desc">熟练使用常见工具，能够独立完成视觉设计任务。</div>
-        <div class="skill-bar-wrap"><div class="skill-bar" data-width="80%"></div></div>
+        <div class="skill-cat"><span class="en">Scientific Tools</span><span class="zh">科研工具</span></div>
+        <div class="skill-tags">
+          <span class="skill-tag">ArcGIS</span>
+          <span class="skill-tag">COMSOL</span>
+          <span class="skill-tag">ODV</span>
+          <span class="skill-tag">CMIP6/7</span>
+          <span class="skill-tag">EPIC-IIASA</span>
+        </div>
       </div>
 
       <div class="skill-card fade-in">
-        <div class="skill-icon">📊</div>
-        <div class="skill-name">技能三（如：数据分析）</div>
-        <div class="skill-desc">有一定基础和实践经验，正在持续深入学习中。</div>
-        <div class="skill-bar-wrap"><div class="skill-bar" data-width="65%"></div></div>
+        <div class="skill-cat"><span class="en">Data & Analysis</span><span class="zh">数据与分析</span></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Climate Modelling</span>
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Statistical Analysis</span>
+          <span class="skill-tag">Remote Sensing</span>
+        </div>
       </div>
 
       <div class="skill-card fade-in">
-        <div class="skill-icon">🤝</div>
-        <div class="skill-name">团队协作</div>
-        <div class="skill-desc">善于沟通，有良好的团队合作精神，能高效配合跨部门工作。</div>
-        <div class="skill-bar-wrap"><div class="skill-bar" data-width="95%"></div></div>
+        <div class="skill-cat"><span class="en">Languages</span><span class="zh">语言能力</span></div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.2rem;">
+          <div class="lang-row">
+            <span class="lang-name en">Mandarin</span><span class="lang-name zh">普通话</span>
+            <div class="lang-bar-wrap"><div class="lang-bar" data-width="100%"></div></div>
+            <span class="lang-level"><span class="en">Native</span><span class="zh">母语</span></span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name en">English</span><span class="lang-name zh">英语</span>
+            <div class="lang-bar-wrap"><div class="lang-bar" data-width="95%"></div></div>
+            <span class="lang-level"><span class="en">Professional</span><span class="zh">专业</span></span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name en">Cantonese</span><span class="lang-name zh">粤语</span>
+            <div class="lang-bar-wrap"><div class="lang-bar" data-width="85%"></div></div>
+            <span class="lang-level"><span class="en">Fluent</span><span class="zh">流利</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card fade-in">
+        <div class="skill-cat"><span class="en">Interests</span><span class="zh">兴趣爱好</span></div>
+        <div class="skill-tags">
+          <span class="skill-tag">⚽ <span class="en">Soccer (Captain)</span><span class="zh">足球（队长）</span></span>
+          <span class="skill-tag">🏉 Rugby</span>
+          <span class="skill-tag">🥊 Boxing</span>
+          <span class="skill-tag">🏋️ <span class="en">Gym</span><span class="zh">健身</span></span>
+        </div>
       </div>
 
     </div>
   </section>
 
-  <!-- ===== 联系 ===== -->
+  <!-- ===== Awards ===== -->
+  <section id="awards">
+    <div class="container fade-in">
+      <div class="section-label"><span class="en">Awards & Honors</span><span class="zh">荣誉奖项</span></div>
+      <h2 class="section-title"><span class="en">Awards</span><span class="zh">荣誉奖项</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="award-list container">
+
+      <div class="award-card fade-in">
+        <div class="award-icon">🏆</div>
+        <div>
+          <div class="award-title en">Panorama Research Experience Placement (£3,000)</div>
+          <div class="award-title zh">Panorama科研经历奖学金（£3,000）</div>
+          <div class="award-detail en">Department of Environment, University of Leeds</div>
+          <div class="award-detail zh">利兹大学环境系</div>
+          <div class="award-year">2024</div>
+        </div>
+      </div>
+
+      <div class="award-card fade-in">
+        <div class="award-icon">🥉</div>
+        <div>
+          <div class="award-title en">National Bronze Prize — "Cyber+" College Student Entrepreneurship Competition</div>
+          <div class="award-title zh">全国铜奖 — "互联网+"大学生创新创业大赛</div>
+          <div class="award-detail en">National level competition, China</div>
+          <div class="award-detail zh">全国级别赛事</div>
+          <div class="award-year">2023</div>
+        </div>
+      </div>
+
+      <div class="award-card fade-in">
+        <div class="award-icon">🎖️</div>
+        <div>
+          <div class="award-title en">Exhibitioner Award — St Anne's College, University of Oxford</div>
+          <div class="award-title zh">优秀学者奖 — 牛津大学圣安妮学院</div>
+          <div class="award-detail en">Academic excellence award granted by St Anne's College</div>
+          <div class="award-detail zh">由圣安妮学院授予的学术优秀奖项</div>
+          <div class="award-year">2022</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
   <section id="contact">
-    <div class="contact-inner fade-in">
-      <div class="section-label">Contact</div>
-      <h2 class="section-title">联系我</h2>
-      <div class="section-line" style="margin: 0 auto 2rem;"></div>
-      <p style="color: var(--text-muted);">
-        欢迎通过以下方式与我取得联系，无论是合作机会还是简单的打招呼，我都很乐意回复。
+    <div class="contact-inner container fade-in">
+      <div class="section-label"><span class="en">Get in Touch</span><span class="zh">联系我</span></div>
+      <h2 class="section-title"><span class="en">Contact</span><span class="zh">联系方式</span></h2>
+      <div class="section-line" style="margin: 0 auto 1.5rem;"></div>
+      <p style="color:var(--text-muted);font-size:.9rem;">
+        <span class="en">Open to research collaborations, academic discussions, and new opportunities.</span>
+        <span class="zh">欢迎科研合作、学术交流，以及任何新的机会与可能。</span>
       </p>
       <div class="contact-cards">
-        <!-- ↓ 把 your@email.com 改成你的邮箱 ↓ -->
-        <a class="contact-card" href="mailto:your@email.com">
+        <a class="contact-card" href="mailto:mindao.wang@st-annes.ox.ac.uk">
           <span class="contact-icon">✉️</span>
           <div>
-            <div class="contact-label">邮箱</div>
-            <div class="contact-value">your@email.com</div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">mindao.wang@st-annes.ox.ac.uk</div>
           </div>
         </a>
-        <!-- ↓ 把 yourhandle 改成你的 GitHub 用户名，没有可以删掉这个卡片 ↓ -->
-        <a class="contact-card" href="https://github.com/yourhandle" target="_blank" rel="noopener">
-          <span class="contact-icon">🐙</span>
+        <a class="contact-card" href="tel:+447384061753">
+          <span class="contact-icon">📞</span>
           <div>
-            <div class="contact-label">GitHub</div>
-            <div class="contact-value">@yourhandle</div>
+            <div class="contact-label"><span class="en">Phone</span><span class="zh">电话</span></div>
+            <div class="contact-value">+44 7384 061753</div>
           </div>
         </a>
-        <!-- ↓ 改成你的微信号，或者删掉这张卡片 ↓ -->
         <a class="contact-card" href="#">
-          <span class="contact-icon">💬</span>
+          <span class="contact-icon">🏛️</span>
           <div>
-            <div class="contact-label">微信</div>
-            <div class="contact-value">your_wechat_id</div>
+            <div class="contact-label"><span class="en">Address</span><span class="zh">地址</span></div>
+            <div class="contact-value">St Anne's College, Oxford OX2 6HS</div>
           </div>
         </a>
       </div>
@@ -403,29 +705,34 @@
 </main>
 
 <footer>
-  <!-- ↓ 把"王珉道"改成你的真实名字 ↓ -->
-  <p>© 2026 王珉道 · 用 ❤️ 和 HTML 构建</p>
+  <p>© 2026 Mindao (ADO) Wang · <span class="en">University of Oxford · Earth Science</span><span class="zh">牛津大学 · 地球科学</span></p>
 </footer>
 
 <script>
-  // 滚动淡入动画
+  function toggleLang() {
+    const body = document.body;
+    const btn = document.getElementById('lang-btn');
+    body.classList.toggle('zh');
+    btn.textContent = body.classList.contains('zh') ? 'EN' : '中';
+  }
+
+  // 滚动淡入
   const observer = new IntersectionObserver(
-    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-    { threshold: 0.12 }
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1 }
   );
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // 技能进度条动画（滚动到可见时触发）
-  const barObserver = new IntersectionObserver((entries) => {
+  // 语言进度条动画
+  const barObserver = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        const bar = e.target;
-        bar.style.width = bar.dataset.width;
-        barObserver.unobserve(bar);
+        e.target.style.width = e.target.dataset.width;
+        barObserver.unobserve(e.target);
       }
     });
   }, { threshold: 0.5 });
-  document.querySelectorAll('.skill-bar').forEach(bar => {
+  document.querySelectorAll('.lang-bar').forEach(bar => {
     bar.style.width = '0%';
     barObserver.observe(bar);
   });
